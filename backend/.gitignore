@@ -1,0 +1,8 @@
+/venv/
+.idea/
+/static
+/media
+.vscode
+env.sh
+.env
+__pycache__
