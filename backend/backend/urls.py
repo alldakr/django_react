@@ -5,6 +5,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', include("instagram.urls")),
+
 ]
 
 if settings.DEBUG:
@@ -12,6 +14,7 @@ if settings.DEBUG:
                           document_root=settings.MEDIA_ROOT)
 
     import debug_toolbar
+
     urlpatterns += [
-        path('__debug__/', include(debug_toolbar.urls)),
+        path("__debug__/", include(debug_toolbar.urls)),
     ]
