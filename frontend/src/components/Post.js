@@ -3,8 +3,9 @@ import { Avatar, Card } from "antd";
 import { HeartOutlined, HeartFilled, UserOutlined } from "@ant-design/icons";
 import "./Post.scss";
 
-const Post = (post) => {
-  const { caption, location, photo } = post;
+const Post = ({ post }) => {
+  const { author, caption, location, photo, tag_set, like_user_set } = post;
+  const { username, name, avatar_url } = author;
   return (
     <div>
       <Card
@@ -13,7 +14,17 @@ const Post = (post) => {
         actions={[<HeartFilled />]}
       >
         <Card.Meta
-          avatar={<Avatar size="large" icon={<UserOutlined />} />}
+          avatar={
+            <Avatar
+              size="large"
+              icon={
+                <img
+                  src={"http://localhost:8000" + avatar_url}
+                  alt={username}
+                />
+              }
+            />
+          }
           title={location}
           description={caption}
         />
