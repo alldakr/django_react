@@ -2,8 +2,14 @@ import React from "react";
 import { Input, Menu } from "antd";
 import "./AppLayout.scss";
 import LogoImage from "assets/logo.png";
+import { useHistory } from "react-router-dom";
 
 function AppLayout({ children, sidebar }) {
+  const history = useHistory();
+  const handleClick = () => {
+    history.push("/accounts/login");
+  };
+
   return (
     <div className="app">
       <div className="header">
@@ -16,7 +22,7 @@ function AppLayout({ children, sidebar }) {
         </div>
         <div className="topnav">
           <Menu mode="horizontal">
-            <Menu.Item>메뉴1</Menu.Item>
+            <Menu.Item onClick={handleClick}>로그인</Menu.Item>
             <Menu.Item>메뉴2</Menu.Item>
             <Menu.Item>메뉴3</Menu.Item>
           </Menu>

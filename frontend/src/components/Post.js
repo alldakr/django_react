@@ -1,17 +1,26 @@
 import React from "react";
-import { Avatar, Card } from "antd";
+import moment from "moment";
+import { Avatar, Card, Comment, Tooltip } from "antd";
 import { HeartOutlined, HeartFilled, UserOutlined } from "@ant-design/icons";
 import "./Post.scss";
 
-const Post = ({ post }) => {
-  const { author, caption, location, photo, tag_set, like_user_set } = post;
+import CommentList from "./CommentList";
+
+const Post = ({ post, handleLike }) => {
+  const { author, caption, location, photo, tag_set, is_like } = post;
   const { username, name, avatar_url } = author;
   return (
     <div>
       <Card
         hoverable
         cover={<img src={photo} alt={caption} />}
-        actions={[<HeartFilled />]}
+        actions={[
+          is_like ? (
+            <HeartFilled onClick={() => handleLike({ post, isLike: false })} />
+          ) : (
+            <HeartOutlined onClick={() => handleLike({ post, isLike: true })} />
+          ),
+        ]}
       >
         <Card.Meta
           avatar={
@@ -27,7 +36,9 @@ const Post = ({ post }) => {
           }
           title={location}
           description={caption}
+          style={{ marginBottom: "0.5em" }}
         />
+        <CommentList post={post} />
       </Card>
     </div>
   );

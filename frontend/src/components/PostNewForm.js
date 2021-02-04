@@ -3,9 +3,10 @@ import { useHistory } from "react-router-dom";
 import { Form, Input, Button, Modal, Upload, notification } from "antd";
 import { FrownOutlined, PlusOutlined } from "@ant-design/icons";
 import { getBase64FromFile } from "utils/base64";
-import Axios from "axios";
+// import Axios from "axios";
 import { useAppContext } from "store";
 import { parseErrorMessages } from "utils/forms";
+import { axiosInstance, useAxios } from "api";
 
 export default function PostNewFrom() {
   const {
@@ -49,16 +50,12 @@ export default function PostNewFrom() {
 
     const headers = { Authorization: `JWT ${jwtToken}` };
     try {
-      const response = await Axios.post(
-        "http://localhost:8000/api/posts/",
-        formData,
-        { headers }
-      );
-      console.log("success response: ", response);
+      const response = await axiosInstance.post("/api/posts/", formData, {
+        headers,
+      });
       history.push("/");
     } catch (error) {
       if (error.response) {
-        console.log("error.response: ", error.response);
         const { status, data: fieldsErrorMessages } = error.response;
         if (typeof fieldsErrorMessages === "string") {
           notification.open({

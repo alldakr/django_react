@@ -3,8 +3,7 @@ import { Card } from "antd";
 import Suggestion from "./Suggestion";
 import "./SuggestionList.scss";
 import { useAppContext } from "store";
-import Axios from "axios";
-import useAxios from "axios-hooks";
+import { axiosInstance, useAxios } from "api";
 
 export default function SuggestionList(style) {
   const {
@@ -15,7 +14,7 @@ export default function SuggestionList(style) {
   const [userList, setUserList] = useState([]);
 
   const [{ data: origUserList, loading, error }, refetch] = useAxios({
-    url: "http://localhost:8000/accounts/suggestions/",
+    url: "/accounts/suggestions/",
     headers,
   });
 
@@ -29,7 +28,8 @@ export default function SuggestionList(style) {
   const onFollowUser = (username) => {
     const data = { username };
     const config = { headers };
-    Axios.post("http://localhost:8000/accounts/follow/", data, config)
+    axiosInstance
+      .post("/accounts/follow/", data, config)
       .then((response) => {
         setUserList((prevUserList) =>
           prevUserList.map((user) =>
